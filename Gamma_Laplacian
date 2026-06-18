@@ -1,0 +1,13 @@
+Laplacian for Weighted $\Gamma_n$ Graphs! :) 
+AB[n_]:=If[n==0,{{{1}},{{1}}},{BlockDiagonalMatrix[{IdentityMatrix[Power[2,n-1]],AB[n-1][[2]]}],
+			SparseArray[{Band[{1,Power[2,n-1]+1}] -> {IdentityMatrix[Power[2,n-1]]}, 
+			Band[{Power[2,n-1]+1,1}] -> {AB[n-1][[1]]}}]}]
+(* AB[3][[2]]//MatrixForm (* Returns B_3 *) *)
+L[n_]:=DiagonalMatrix[ConstantArray[2+2w,Power[2,n]]]-w*(AB[n][[1]]+Inverse[AB[n][[1]]])-(AB[n][[2]]+Inverse[AB[n][[2]]])
+
+Notation:
+AB[dimension][[edge type]] 
+    dimension: feed in a positive integer n to get a 2^n by 2^n matrix
+    edge type: either 1 (a edge, weighted) or 2 (b edge, unweighted)
+L[n]
+    Laplacian of the graph at level n
